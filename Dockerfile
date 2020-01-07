@@ -4,12 +4,12 @@ RUN apt-get update;
 
 #Utility packagess
 
-RUN apt-get install --no-install-recommends --no-install-suggests -y nano vim wget unzip curl systemd
+RUN apt-get install --no-install-recommends --no-install-suggests -y nano unzip
 
 #NGINX Setup
 
 RUN apt-get install --no-install-recommends --no-install-suggests -y nginx
-COPY /srcs/default etc/nginx/sites-available/ 
+COPY /srcs/default etc/nginx/sites-enabled/ 
 COPY /srcs/nginx.conf etc/nginx
 
 #MYSQL Setup
@@ -19,7 +19,7 @@ RUN mysql_install_db
 
 #PHP Setup
 
-RUN apt-get install --no-install-recommends --no-install-suggests -y php-{fpm,mysql,mbstring,zip,gd,pear,gettext,cgi}
+RUN apt-get install --no-install-recommends --no-install-suggests -y php-fpm php-mysql php-mbstring php-zip php-gd php-pear php-gettext php-cgi
 COPY srcs/info.php /var/www/html 
 
 #WordPress
@@ -30,8 +30,14 @@ RUN unzip /var/www/html/wordpress.zip -d /var/www/html
 
 #phpMyAdmin
 
-COPY srcs/phpMyAdmin.zip /var/www/html 
+COPY srcs/phpMyAdmin.zip /var/www/html
 RUN unzip /var/www/html/phpMyAdmin.zip -d /var/www/html
+COPY srcs/config.inc.php /var/www/html/phpmyadmin
+
+
+
+
+#SSL
 
 #Starting instructions
 
