@@ -4,7 +4,7 @@ RUN apt-get update;
 
 #Utility packagess
 
-RUN apt-get install --no-install-recommends --no-install-suggests -y nano unzip
+RUN apt-get install --no-install-recommends --no-install-suggests -y unzip nano
 
 #NGINX Setup
 
@@ -23,13 +23,13 @@ RUN service mysql start; \
 
 #PHP Setup
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends --no-install-suggests -y php-fpm php-mysql php-mbstring php-zip php-gd php-pear php-gettext php-cgi
+RUN apt-get install --no-install-recommends --no-install-suggests -y php-fpm php-mysql php-mbstring php-zip php-gd php-pear php-gettext php-cgi
 COPY srcs/info.php /var/www/html 
 
 #WordPress
 
 COPY srcs/wordpress.zip /var/www/html 
-COPY srcs/test.html /var/www/html 
+COPY srcs/index.html /var/www/html 
 RUN unzip /var/www/html/wordpress.zip -d /var/www/html
 RUN rm /var/www/html/wordpress.zip
 
@@ -42,6 +42,18 @@ RUN rm /var/www/html/phpMyAdmin.zip
 COPY srcs/config.inc.php /var/www/html/phpMyAdmin
 
 #SSL
+
+RUN apt-get install openssl
+RUN openssl req \
+	-x509 \
+	-nodes \
+	-days 365 \
+	-newkey rsa:2048 \
+	-subj "/C=BE/ST=BXL/L=BXL/O=19/CN=localhost" \ 
+	-keyout /etc/ssl/private/nginx-selfsigned.key \
+	-out /etc/ssl/certs/nginx-selfsigned.crt 
+
+COPY srcs/ssl.conf etc/nginx/conf.d/
 
 #Starting instructions
 
