@@ -14,7 +14,7 @@
  * This is needed for cookie based authentication to encrypt password in
  * cookie. Needs to be 32 chars long.
  */
-$cfg['blowfish_secret'] = 'hellohellohellohello'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
+$cfg['blowfish_secret'] = 'EKCkJ/s:D29o4G6XJgGdyUJfT1kC7lm}'; /* YOU MUST FILL IN THIS FOR COOKIE AUTH! */
 
 /**
  * Servers configuration
@@ -39,8 +39,8 @@ $cfg['Servers'][$i]['AllowNoPassword'] = false;
 /* User used to manipulate with storage */
 // $cfg['Servers'][$i]['controlhost'] = '';
 // $cfg['Servers'][$i]['controlport'] = '';
- $cfg['Servers'][$i]['controluser'] = 'pma';
- $cfg['Servers'][$i]['controlpass'] = 'pmapass';
+ $cfg['Servers'][$i]['controluser'] = 'ncolin';
+ $cfg['Servers'][$i]['controlpass'] = 'ncolin123';
 
 /* Storage database and tables */
  $cfg['Servers'][$i]['pmadb'] = 'phpmyadmin';
