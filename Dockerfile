@@ -31,6 +31,7 @@ COPY srcs/index.html /var/www/html
 RUN unzip /var/www/html/wordpress.zip -d /var/www/html
 RUN rm /var/www/html/wordpress.zip
 RUN chown -R www-data:www-data /var/www/html/wordpress
+COPY srcs/wp-config.php /var/www/html/wordpress
 #phpMyAdmin
 
 COPY srcs/phpMyAdmin.zip /var/www/html
@@ -54,9 +55,9 @@ RUN openssl req \
 	-out /etc/ssl/certs/nginx-selfsigned.crt 
 
 #Start-up instructions
-
+EXPOSE 80
+EXPOSE 443
 ADD srcs/start.sh /
 RUN chmod +x /start.sh
 
-#CMD bash start.sh
-
+CMD bash start.sh && tail -f /dev/null
